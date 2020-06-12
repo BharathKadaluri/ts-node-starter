@@ -1,4 +1,4 @@
-FROM node:10 AS BUILD
+FROM node:10
 
 RUN mkdir -p /usr/share/app
 WORKDIR /usr/share/app

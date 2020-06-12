@@ -70,7 +70,7 @@ const  videoUsageData = async () => {
     });
 }
 
-const insightsCronJob = new CronJob('*/2 * * * *', () => {
+const insightsCronJob = new CronJob(config.INSIGHTS_CRON_JOB, () => {
     LOG.info(`starting cron job to fetch insights data`)
     quizUsageData();
     videoUsageData();
