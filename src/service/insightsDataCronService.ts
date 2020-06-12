@@ -4,7 +4,7 @@ import  TribyteQuizUsagedata from '../nsdcEntity/tribyteQuizUsageDataModel';
 import  TribyteVideoUsageData from '../nsdcEntity/tribyteVideoUsageDataModel';
 import  NsdcCourseBatch from '../nsdcEntity/nsdcCourseBatchModel';
 import {CronJob} from 'cron';
-import config from 'src/config/config';
+import config from '../config/config';
 
 
 // Get video usage data
