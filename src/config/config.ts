@@ -1,0 +1,34 @@
+import dotenv from 'dotenv';
+
+// dotenv
+dotenv.config();
+
+const config  = {
+    PORT: process.env.PORT || 3000,
+    NSDC_DOMAIN: process.env.NSDC_DOMIN,
+    NSDC_UPDATE_USER :`${process.env.NSDC_DOMIN}/API/user_update`,
+    CHECK_API_TOKEN_URL:`${process.env.NSDC_DOMIN}/API/check_data_origin`,
+    NSDC_IV: process.env.IV,
+    NSDC_SECRET: process.env.SECRET,
+    NSDC_API_KEY: process.env.API_KEY,
+    NSDC_MYSQL_HOST: process.env.NSDC_MYSQL_HOST,
+    NSDC_MYSQL_USERNAME: process.env.NSDC_MYSQL_USERNAME,
+    NSDC_MYSQL_PASSWORD: process.env.NSDC_MYSQL_PASSWORD,
+    NSDC_MYSQL_DATABASE: process.env.NSDC_MYSQL_DATABASE,
+    NSDC_MYSQL_PORT: process.env.NSDC_MYSQL_PORT,
+    INSIGHTS_MYSQL_HOST: process.env.INSIGHTS_MYSQL_HOST,
+    INSIGHTS_MYSQL_USERNAME: process.env.INSIGHTS_MYSQL_USERNAME,
+    INSIGHTS_MYSQL_PASSWORD: process.env.INSIGHTS_MYSQL_PASSWORD,
+    INSIGHTS_MYSQL_DATABASE: process.env.INSIGHTS_MYSQL_DATABASE,
+    INSIGHTS_MYSQL_PORT: process.env.INSIGHTS_MYSQL_PORT,
+    LEARNWISE_API_EXPIRY: process.env.LEARNWISE_API_EXPIRY,
+    LEARNWISE_API_APP_KEY: process.env.LEARNWISE_API_APP_KEY,
+    LEARNWISE_API_APP_SECRET: process.env.LEARNWISE_API_APP_SECRET,
+    PROD_LEARNWISE_DOMAIN: process.env.PROD_LEARNWISE_DOMAIN,
+    ENABLE_CRON_JOBS: process.env.ENABLE_CRON_JOBS,
+    INSIGHTS_CRON_JOB: process.env.INSIGHTS_CRON_JOB || '',
+    MAX_VIDEO_LENGTH_FILE: process.env.MAX_VIDEO_LENGTH_FILE  || '',
+    NSDC_USERS_TABLE_UPDATE_CRON: process.env.NSDC_USERS_TABLE_UPDATE_CRON || ''
+}
+
+export default config;

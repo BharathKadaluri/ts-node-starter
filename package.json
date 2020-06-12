@@ -7,22 +7,34 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "build": "tsc",
-    "prod": "node build/app.js"
+    "preprod": "tsc",
+    "prod": "node build/app.js",
+    "dev:readCsv": "ts-node src/service/videoMaxLengthParser.ts",
+    "prod:readCsv": "node build/service/videoMaxLengthParser.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cron": "^1.7.2",
     "@types/express": "^4.17.6",
     "@types/express-actuator": "^1.3.0",
+    "@types/moment": "^2.13.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.1",
     "tslint": "^6.1.2",
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "cron": "^1.8.2",
+    "csv-parser": "^2.3.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-actuator": "^1.5.0",
+    "moment": "^2.26.0",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "snake-case": "^3.0.3",
+    "typeorm": "^0.2.25",
     "winston": "^3.2.1"
   }
 }
