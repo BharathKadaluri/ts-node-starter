@@ -13,6 +13,9 @@ export default class NsdcCourseBatch extends BaseEntity {
     @Column()
     language!: string;
 
+    @Column({name:'institute_id', default: '1111'})
+    institueId: string
+
     @Column()
     country!: string;
 
