@@ -58,7 +58,9 @@ const computeLogicForBritanniaCourses = async () => {
 
     // LOOP through video usage
     userCourseVideoData.forEach(async (x:UserCourseVideo) => {
+       try {
         // Get the user from nsdcUser if the user doesnot exist create one
+        LOG.info(`user email ${x.userEmail}`)
         const emailArr = x.userEmail.split('@');
         const checkNumber = Number.parseInt(emailArr[0], 10);
         if(Number.isNaN(checkNumber)){
@@ -164,16 +166,20 @@ const computeLogicForBritanniaCourses = async () => {
         }
         LOG.info(`persisiting for user ${JSON.stringify(user)}`)
         nsdcUserRepo.save(user);
+    }catch(error) {
+        LOG.error(`Error ${JSON.stringify(error)}`)
+    }
     });
 }
 
 const checkIndividualModuleProgress = async(userCourseVideo :UserCourseVideo,
     moduleMaxLengthMap:Map<number, number>, nsdcManager:EntityManager) => {
         let done = true;
+        LOG.info(`userCourseVideo ${JSON.stringify(userCourseVideo)}`)
         const userModuleVideoData = await nsdcManager
         .query(`select user_email as userEmail, tmodule_id as tmoduleId,
-        sum(duration) as duratiom from tribyte_video_usage_data group by tmodule_id, user_email
-         having tcourse_id = \'${userCourseVideo.tcourseId}\' and user_email = ${userCourseVideo.userEmail}`);
+        sum(duration) as duratiom from tribyte_video_usage_data group by tmodule_id, user_email, tcourse_id
+         having tcourse_id = \'${userCourseVideo.tcourseId}\' and user_email = \'${userCourseVideo.userEmail}\'`);
 
         const userModuleArray: UserModuleVideo[] = JSON.parse(JSON.stringify(userModuleVideoData));
         if (userModuleArray.length === 0){
