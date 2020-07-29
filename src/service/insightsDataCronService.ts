@@ -17,20 +17,28 @@ const quizUsageData = async () => {
 
 
     // fetch the list of video courses list for video consumption
-    const quizList = ['16954673', '16965695', '17931611', '19093204'];
+    const quizList = ['16954673', '16965695', '17931611', '999', '19093204', '18860818'];
 
-        quizList.forEach(async quizId => {
-        const tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = ${quizId}`);
+    quizList.forEach(async quizId => {
+        let tribyteQuizUsage = null;
+        if (quizId == '17931611') {
+            tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = ${quizId} and tcourse_id = 24209`);
+        } else if (quizId == '999') {
+            tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = 17931611 and tcourse_id = 25356`);
+        }
+        else {
+            tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = ${quizId}`);
+        }
         const tribyteQuizUsageJson = JSON.parse(JSON.stringify(tribyteQuizUsage));
-        const tribyteQuizArray : TribyteQuizUsagedata[] =
+        const tribyteQuizArray: TribyteQuizUsagedata[] =
             tribyteQuizUsageJson as TribyteQuizUsagedata[]
         // create a map
         const quizMap = new Map();
         // remove duplicates
         tribyteQuizArray.forEach(x => {
-            if(quizMap.has(x.uid)) {
+            if (quizMap.has(x.uid)) {
                 const entry = quizMap.get(x.uid);
-                if(entry.passScore < x.passScore){
+                if (entry.passScore < x.passScore) {
                     quizMap.set(x.uid, x);
                 }
             } else {
