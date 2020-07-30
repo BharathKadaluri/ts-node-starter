@@ -21,9 +21,9 @@ const quizUsageData = async () => {
 
     quizList.forEach(async quizId => {
         let tribyteQuizUsage = null;
-        if (quizId == '17931611') {
+        if (quizId === '17931611') {
             tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = ${quizId} and tcourse_id = 24209`);
-        } else if (quizId == '999') {
+        } else if (quizId === '999') {
             tribyteQuizUsage = await insightsManager.query(`select * from tribyte_quiz_usage_data where tquiz_id = 17931611 and tcourse_id = 25356`);
         }
         else {
@@ -35,6 +35,7 @@ const quizUsageData = async () => {
         // create a map
         const quizMap = new Map();
         // remove duplicates
+        LOG.info(`Tribyte quiz records :: quizId :: ${quizId} :: records :: ${tribyteQuizArray.length} `)
         tribyteQuizArray.forEach(x => {
             if (quizMap.has(x.uid)) {
                 const entry = quizMap.get(x.uid);

@@ -51,7 +51,7 @@ const computeLogicForBritanniaCourses = async () => {
 
     const userCourseVideoData = JSON.parse(JSON.stringify(userCourseVideo));
 
-    LOG.info(`Course Watch Video Data ${userCourseVideoData}`)
+    LOG.info(`Course Watch Video Data length :: ${userCourseVideoData.length}`)
     const nsdcUserRepo = nsdcManager.getRepository(NsdcUser);
     const tribyteQuizUsagedataRepo = nsdcManager.getRepository(TribyteQuizUsagedata);
 
@@ -170,6 +170,78 @@ const computeLogicForBritanniaCourses = async () => {
         LOG.error(`Error ${JSON.stringify(error)}`)
     }
     });
+
+    // loop quiz data
+    // check if it exists in video data
+    //   if exists skip
+    //   else
+   const nsdcQuizUsage = await nsdcManager.query('SELECT user_email as userEmail, user_score as userScore, tcourse_id as tcourseId, attempt_endtime as attemptEndtime FROM tribyte_quiz_usage_data')
+   const nsdcQuizUsageData = JSON.parse(JSON.stringify(nsdcQuizUsage));
+
+   nsdcQuizUsageData.forEach( async (x: UserQuiz) => {
+
+        const userCovered = await userCourseVideoData
+        .filter( async (y:UserCourseVideo) => {
+            LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} `)
+            return y.userEmail === x.userEmail
+        })
+
+        if(userCovered.length === 0) {
+          LOG.info(`quiz done but not watch video user_email ${x.userEmail}`)
+        }
+
+       /* if(userCovered.length === 0){
+            try {
+                // Get the user from nsdcUser if the user doesnot exist create one
+                LOG.info(`user email ${x.userEmail}`)
+                const emailArr = x.userEmail.split('@');
+                const checkNumber = Number.parseInt(emailArr[0], 10);
+                if(Number.isNaN(checkNumber)){
+                    LOG.info(`CandidateId ${emailArr[0]} , Email ${x.userEmail} is local  email hence not updating`)
+                    return;
+                }
+                const users : NsdcUser [] = await nsdcUserRepo
+                .find({where:{candidateId: emailArr[0], candidateLmsCourseId: x.tcourseId}});
+                let user: NsdcUser;
+
+                if(users.length === 0){
+                    LOG.info(`Could not find user ${x.userEmail} in nsdc_users table, creating a new entry`)
+                    user = new NsdcUser();
+                    user.candidateId = emailArr[0];
+                    user.candidateLmsCourseId = x.tcourseId.toString();
+                    // handle course id
+                } else{
+                    LOG.info(`Found user with ${x.userEmail} in nsdc_users table ${users[0]}`)
+                    user = users[0];
+                }
+
+                if(x.userScore >= GRADED_QUIZ_PERCENTAGE) {
+                    LOG.info(`User ${user.candidateId} has quiz score ${x.userScore} greater than,
+                    ${GRADED_QUIZ_PERCENTAGE}`)
+                // if taken and >=40
+                    // set course_status = 4
+                    // set certification_status = 1;
+                    // certification_type = 'Graded'
+                    user.courseStatus = '4';
+                    user.certificationStatus = '1';
+                    user.certificationType = GRADED;
+                }
+                // assessment_taken = 1;
+                // assessment_percentage = %
+                // assessment_date =
+                // certification_percentage =
+                user.assessmentTaken = '1';
+                user.assessmentPercentage = x.userScore.toString();
+                user.assessmentDate = moment.unix(x.attemptEndtime).format(NSDC_DATE_FORMAT);
+                user.certificationPercentage = x.userScore.toString();
+                nsdcUserRepo.save(user);
+            }  catch(error) {
+                LOG.error(`Error ${JSON.stringify(error)}`)
+            }
+            
+        } */
+    });
+
 }
 
 const checkIndividualModuleProgress = async(userCourseVideo :UserCourseVideo,
@@ -219,6 +291,8 @@ interface UserCourseVideo {
 interface UserQuiz {
     userEmail: string;
     userScore: number;
+    tcourseId: number;
+    attemptEndtime: number
 }
 
 
