@@ -182,7 +182,7 @@ const computeLogicForBritanniaCourses = async () => {
 
         const userCovered = await userCourseVideoData
         .filter( async (y:UserCourseVideo) => {
-            LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} `)
+            LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} :: quiz :: ${y.userEmail}`)
             return y.userEmail === x.userEmail
         })
 
