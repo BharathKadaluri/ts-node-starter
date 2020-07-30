@@ -187,11 +187,11 @@ const computeLogicForBritanniaCourses = async () => {
         })
 
         LOG.info(`userCovered value ${JSON.stringify(userCovered)}`)
-        if(userCovered.length === 0) {
+       /* if(userCovered.length === 0) {
           LOG.info(`quiz done but not watch video user_email ${x.userEmail}`)
         }
-
-       /* if(userCovered.length === 0){
+       */
+       if(userCovered.length === 0){
             try {
                 // Get the user from nsdcUser if the user doesnot exist create one
                 LOG.info(`user email ${x.userEmail}`)
@@ -226,11 +226,14 @@ const computeLogicForBritanniaCourses = async () => {
                     user.courseStatus = '4';
                     user.certificationStatus = '1';
                     user.certificationType = GRADED;
+                } else {
+                    // assessment_taken = 1;
+                    // assessment_percentage = %
+                    // assessment_date =
+                    // certification_percentage =
+                    user.courseStatus = '3';
+                    user.certificationStatus = '0';
                 }
-                // assessment_taken = 1;
-                // assessment_percentage = %
-                // assessment_date =
-                // certification_percentage =
                 user.assessmentTaken = '1';
                 user.assessmentPercentage = x.userScore.toString();
                 user.assessmentDate = moment.unix(x.attemptEndtime).format(NSDC_DATE_FORMAT);
@@ -239,8 +242,7 @@ const computeLogicForBritanniaCourses = async () => {
             }  catch(error) {
                 LOG.error(`Error ${JSON.stringify(error)}`)
             }
-            
-        } */
+        }
     });
 
 }
