@@ -180,8 +180,8 @@ const computeLogicForBritanniaCourses = async () => {
 
    nsdcQuizUsageData.forEach( async (x: UserQuiz) => {
 
-        const userCovered = await userCourseVideoData
-        .filter( async (y:UserCourseVideo) => {
+        const userCovered = userCourseVideoData
+        .filter((y:UserCourseVideo) => {
             LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} :: quiz :: ${x.userEmail}`)
             return y.userEmail === x.userEmail
         })
