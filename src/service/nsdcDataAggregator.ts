@@ -182,10 +182,11 @@ const computeLogicForBritanniaCourses = async () => {
 
         const userCovered = await userCourseVideoData
         .filter( async (y:UserCourseVideo) => {
-            LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} :: quiz :: ${y.userEmail}`)
+            LOG.info(`video usage and quiz data comparision video :: ${y.userEmail} :: quiz :: ${x.userEmail}`)
             return y.userEmail === x.userEmail
         })
 
+        LOG.info(`userCovered value ${userCovered}`)
         if(userCovered.length === 0) {
           LOG.info(`quiz done but not watch video user_email ${x.userEmail}`)
         }
