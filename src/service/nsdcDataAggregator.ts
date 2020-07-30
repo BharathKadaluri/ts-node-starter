@@ -186,7 +186,7 @@ const computeLogicForBritanniaCourses = async () => {
             return y.userEmail === x.userEmail
         })
 
-        LOG.info(`userCovered value ${userCovered.userEmail}`)
+        LOG.info(`userCovered value ${JSON.stringify(userCovered)}`)
         if(userCovered.length === 0) {
           LOG.info(`quiz done but not watch video user_email ${x.userEmail}`)
         }
